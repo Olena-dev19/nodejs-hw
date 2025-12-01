@@ -5,7 +5,11 @@ import { connectMongoDB } from './db/connectMongoDB.js';
 import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
-import studentsRoutes from './routes/studentsRoutes.js';
+// import notesRoutes from './routes/notesRoutes.js';
+// import router from './routes/notesRoutes.js';
+
+import notesRouter from './routes/notesRoutes.js';
+
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -13,15 +17,12 @@ const PORT = process.env.PORT ?? 3000;
 app.use(logger);
 app.use(express.json());
 app.use(cors());
+app.use(express.json());
 
 
 // GET /students — список усіх студентів
-app.get(studentsRoutes);
+app.use(notesRouter);
 
-// Маршрут для тестування middleware помилки
-app.get('/test-error', () => {
-  throw new Error('Simulated server error');
-});
 
 // Middleware 404 (після всіх маршрутів)
 app.use(notFoundHandler);
