@@ -17,7 +17,7 @@ const PORT = process.env.PORT ?? 3000;
 app.use(logger);
 app.use(express.json());
 app.use(cors());
-app.use(express.json());
+
 
 
 // GET /students — список усіх студентів
