@@ -21,6 +21,11 @@ export const getAllNotes = async (req, res) => {
   }
 
   const totalQuery = Note.countDocuments();
+
+  if (req.user && req.user._id) {
+  totalQuery.where('userId').equals(req.user._id);
+}
+
   if (tag) {
     totalQuery.where('tag').equals(tag);
   }
