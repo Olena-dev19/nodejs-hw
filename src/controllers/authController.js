@@ -48,7 +48,7 @@ export const logoutUser = async (req, res, next) => {
   const { sessionId } = req.cookies;
 
   if (!sessionId) {
-    return next(createHttpError(400, 'No session ID provided'));
+    return next(createHttpError(204, 'No session ID provided'));
   }
 
   await Session.deleteOne({ _id: sessionId });
@@ -76,9 +76,7 @@ export const refreshUserSession = async (req, res, next) => {
     return next(createHttpError(401, 'Session token expired'));
   }
 
-  await Session.deleteOne({ _id: req.cookies.sessionId,
-    refreshToken: req.cookies.refreshToken,
-  });
+  await Session.deleteOne({ _id: req.cookies.sessionId });
 
   const newSession = await createSession(session.userId);
   setSessionCookies(res, newSession);
