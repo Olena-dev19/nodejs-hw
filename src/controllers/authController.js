@@ -48,7 +48,7 @@ export const logoutUser = async (req, res, next) => {
   const { sessionId } = req.cookies;
 
   if (!sessionId) {
-    return next(createHttpError(204, 'No session ID provided'));
+    return res.status(204).send();
   }
 
   await Session.deleteOne({ _id: sessionId });
